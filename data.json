@@ -1,0 +1,40 @@
+[ 
+    {
+        "food_name": "chicken",
+        "nutrition": [
+            {
+                "nutrient": "protein",
+                "amount": {
+                    "value": 20,
+                    "unit": "mg"
+                }
+            },
+            {
+                "nutrient": "calories",
+                "amount": {
+                    "value": 500,
+                    "unit": "kj"
+                }
+            }
+        ]
+    },
+    {
+        "food_name": "broccoli",
+        "nutrition": [
+            {
+                "nutrient": "protein",
+                "amount": {
+                    "value": 5,
+                    "unit": "mg"
+                }
+            },
+            {
+                "nutrient": "calories",
+                "amount": {
+                    "value": 120,
+                    "unit": "kj"
+                }
+            }
+        ]
+    }
+]
