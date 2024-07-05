@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, send_from_directory
+from flask import Flask, jsonify, request, render_template, send_from_directory, redirect, url_for
 import requests
 from werkzeug.utils import secure_filename
 
@@ -22,11 +22,18 @@ API_URL = "https://api-inference.huggingface.co/models/nateraw/food"
 headers = {"Authorization": "Bearer hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
 
 def query(filename):
-    with open(filename, "rb") as f:
+    file_path = app.config['UPLOAD_FOLDER'] + '/' + filename
+    with open(file_path, "rb") as f:
         data = f.read()
     response = requests.post(API_URL, headers=headers, data=data)
+    ## TODO: Handle errors from HuggingFace
     return response.json() ## Reponse should be image labels and scores
 
+
+## Get nutrition info from FatSecret
+def query_fs(food_label):
+
+    return
 
 ## Routes
 ## Photo upload
@@ -46,16 +53,18 @@ def upload_file():
         filename = secure_filename(file.filename)
         file_path = app.config['UPLOAD_FOLDER'] + '/' + filename
         file.save(file_path)
-        output = query(file_path)
-        return jsonify({'message': 'File successfully uploaded', 'output': output}), 200
-
+        # return jsonify({'message': 'File successfully uploaded', 'output': output}), 200
+        return redirect(url_for('uploaded_file', filename=filename))
     else:
         return jsonify({'error': 'File type not allowed'}), 400
     
 ## Serve uploaded photo
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    output = query(filename)
+    ## TODO: For each label, get nutrition info
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename), \
+        jsonify({'message': 'File successfully uploaded', 'output': output}), 200
 
 
 
