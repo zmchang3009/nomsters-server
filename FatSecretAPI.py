@@ -9,6 +9,7 @@ accesstoken = 'ask jc for auth'
 clientId= 'ask jc for auth'
 clientsecret = 'ask jc for auth'
 
+# run this function to get the access token, expires eevery 24 hours
 def get_access_token_from_fatsecret():
     url = 'https://oauth.fatsecret.com/connect/token'
     response = requests.post(url, auth=(clientId, clientsecret), data={'grant_type': 'client_credentials', 'scope': 'basic'})
