@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, request, render_template, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 from FatSecretAPI import fetch_calorie_data
@@ -99,3 +100,7 @@ def make_combined_requests():
             labels[i]['portion_size'] = res[i]['portion_size']
     # Return the updated labels as JSON response
     return jsonify(labels), 200
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True, port=int(os.environ.get("PORT", 8080)))

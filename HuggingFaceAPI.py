@@ -1,6 +1,8 @@
+import os
 import requests
 
-auth_token = 'ask jc for auth'
+
+auth_token = 'placeholder'
 
 API_URL = "https://api-inference.huggingface.co/models/nateraw/food"
 headers = {"Authorization": "Bearer "+auth_token}
