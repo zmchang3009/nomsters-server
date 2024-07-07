@@ -1,10 +1,8 @@
 import os
 import requests
-from dotenv import load_dotenv
 
 
-load_dotenv()
-auth_token = os.getenv('HUGGINGFACE_AUTH_TOKEN')
+auth_token = 'placeholder'
 
 API_URL = "https://api-inference.huggingface.co/models/nateraw/food"
 headers = {"Authorization": "Bearer "+auth_token}

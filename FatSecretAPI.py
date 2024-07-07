@@ -4,13 +4,11 @@ import asyncio
 import asyncio
 import aiohttp
 import re
-from dotenv import load_dotenv
 
 
-load_dotenv()
-accesstoken = os.getenv('FATSECRET_ACCESS_TOKEN')
-clientId =  os.getenv('FATSECRET_CLIENT_ID')
-clientsecret =  os.getenv('FATSECRET_CLIENT_SECRET')
+accesstoken = 'placeholder'
+clientId =  'placeholder' 
+clientsecret =  'placeholder'
 
 # run this function to get the access token, expires eevery 24 hours
 def get_access_token_from_fatsecret():
