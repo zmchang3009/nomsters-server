@@ -3,9 +3,10 @@ import json  # Import json module for dumping dict to json string
 from dishes_list import dishes
 
 
-FATS_URL = 'http://127.0.0.1:5000/fats'
-HUG_URL = 'http://127.0.0.1:5000/hug'
-INFER_URL = 'http://127.0.0.1:5000/infer'
+BASE_URL = 'https://nomsters-bnmqimcuea-as.a.run.app/'
+FATS_URL = 'https://nomsters-bnmqimcuea-as.a.run.app/fats'
+HUG_URL = 'https://nomsters-bnmqimcuea-as.a.run.app/hug'
+INFER_URL = 'https://nomsters-bnmqimcuea-as.a.run.app/infer'
 
 def fat_query():
     dishes
@@ -27,7 +28,7 @@ def combined_query(image_data):
 data = None
 with open('static/ramen.jpg', "rb") as f:
         data = f.read()
-with open('uploads/formal.jpg', "rb") as f:
-        data = f.read()
+# with open('uploads/formal.jpg', "rb") as f:
+#         data = f.read()
 print(combined_query(data))
 # print(fat_query())
