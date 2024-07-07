@@ -1,13 +1,16 @@
+import os
 import requests
 import asyncio
 import asyncio
 import aiohttp
 import re
+from dotenv import load_dotenv
 
 
-accesstoken = 'ask jc for auth'
-clientId= 'ask jc for auth'
-clientsecret = 'ask jc for auth'
+load_dotenv()
+accesstoken = os.getenv('FATSECRET_ACCESS_TOKEN')
+clientId =  os.getenv('FATSECRET_CLIENT_ID')
+clientsecret =  os.getenv('FATSECRET_CLIENT_SECRET')
 
 # run this function to get the access token, expires eevery 24 hours
 def get_access_token_from_fatsecret():
@@ -129,6 +132,7 @@ async def main(labels):
     for result in results:
         if result is not None:
             print("API request successful!")
+            print(result)
             calArray = extract_calorie_count(result)
             bestGuess = find_reasonable_portion(calArray)
             print(bestGuess, len(calArray)) 
