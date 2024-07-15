@@ -1,26 +1,36 @@
-import os
 import requests
 import asyncio
-import asyncio
 import aiohttp
+import time  # Import time module for timestamp handling
 import re
 
 
 accesstoken = 'placeholder'
+last_update_timestamp = 0  # Initialize to 0 indicating the token has never been updated
 clientId =  'placeholder' 
 clientsecret =  'placeholder'
 
 # run this function to get the access token, expires eevery 24 hours
 def get_access_token_from_fatsecret():
+    global accesstoken, last_update_timestamp  # Use global variables
     url = 'https://oauth.fatsecret.com/connect/token'
-    response = requests.post(url, auth=(clientId, clientsecret), data={'grant_type': 'client_credentials', 'scope': 'basic'})
+    response = requests.post(url, auth=(clientId, clientsecret), data={'grant_type': 'client_credentials', 'scope': 'basic'}, params={'format': 'json'})
     if response.status_code == 200:
         print("API request successful!")
+        accesstoken = response.json()['access_token']  # Update the access token
+        last_update_timestamp = time.time()  # Update the timestamp to current time
         print(response.text)
     else:
         print('API request failed')
         print(response.text)
-        
+
+def check_token_expiry_and_refresh():
+    global last_update_timestamp
+    current_time = time.time()
+    if current_time - last_update_timestamp > 86400:  # Check if more than 86400 seconds have passed
+        get_access_token_from_fatsecret()  # Refresh the token
+
+
 def extract_calorie_count(json_obj):
     res = []
     if 'foods' in json_obj and 'food' in json_obj['foods']:
@@ -155,5 +165,6 @@ def fetch_calorie_data(labels):
         asyncio.set_event_loop(loop)
 
     # Now, run your main function with the (possibly new) event loop
+    check_token_expiry_and_refresh()
     result = loop.run_until_complete(main(labels=labels))
     return result
